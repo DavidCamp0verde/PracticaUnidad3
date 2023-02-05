@@ -44,21 +44,28 @@ public class Main {
 //        }
         GrafoNoDirigidoEtiquetado gde = new GrafoNoDirigidoEtiquetado(5, String.class);
 //        System.out.println(gde.toString());
-        gde.etiquetar(1, "Bosco");
-        gde.etiquetar(2, "Soto");
-        gde.etiquetar(3, "Pe");
-        gde.etiquetar(4, "Intriago");
-        gde.etiquetar(5, "Mercurio");
+        gde.etiquetar(1, "1");
+        gde.etiquetar(2, "2");
+        gde.etiquetar(3, "3");
+        gde.etiquetar(4, "4");
+        gde.etiquetar(5, "5");
         try {
             gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 10.0);
             gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(2), 25.0);
             gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(5), 1.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(4), -10.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(4), 13.0);
             gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(3), 55.0);
             gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(4), 1000.0);
 //            System.out.println(gde.toString());
             
 //            gde.caminoMinimo(1, 5).imprimir();
+            
+            try {
+                Integer nodo = 1;
+                gde.caminoMinimoFloyd();
+            } catch (Exception e) {
+                System.out.println("no se pudo pipipi");
+            }
             new FrmGrafo(null, true, gde, 1).setVisible(true);
             
         } catch (Exception e) {
