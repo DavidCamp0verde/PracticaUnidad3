@@ -9,6 +9,7 @@ import Controlador.Grafo.GrafoDirigido;
 import Controlador.Grafo.GrafoDirigidoEtiquetado;
 import Controlador.Grafo.GrafoNoDirigido;
 import Controlador.Grafo.GrafoNoDirigidoEtiquetado;
+import Controlador.ListaEnlazada.ListaEnlazada;
 import Controlador.Utilidades.Utilidades;
 import Vista.FrmGrafo;
 
@@ -42,26 +43,34 @@ public class Main {
 //        } catch (Exception e) {
 //            System.out.println("Error: "+e.getMessage());
 //        }
-        GrafoNoDirigidoEtiquetado gde = new GrafoNoDirigidoEtiquetado(5, String.class);
+        GrafoNoDirigidoEtiquetado gde = new GrafoNoDirigidoEtiquetado(6, String.class);
 //        System.out.println(gde.toString());
         gde.etiquetar(1, "1");
         gde.etiquetar(2, "2");
         gde.etiquetar(3, "3");
         gde.etiquetar(4, "4");
         gde.etiquetar(5, "5");
+        gde.etiquetar(6, "6");
         try {
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 10.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(2), 25.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(5), 1.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(4), 13.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(3), 55.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(4), 1000.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(4), 6.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 4.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(1), 3.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(2), 5.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(3), 8.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(4), 1.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(2), 9.0);
+            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(4), gde.obtenerEtiqueta(6), 2.0);
 //            System.out.println(gde.toString());
             
 //            gde.caminoMinimo(1, 5).imprimir();
             
             try {
                 Integer nodo = 1;
+//                ListaEnlazada lista = gde.caminoMinimoDijkstra(nodo-1);
+//                System.out.println("Nodo "+(nodo));
+//                for(int i = 0; i < lista.getSize(); i++){
+//                    System.out.println("al nodo "+(i+1)+", recorrido más corto: "+lista.obtener(i));
+//                }
                 gde.caminoMinimoFloyd();
             } catch (Exception e) {
                 System.out.println("no se pudo pipipi");

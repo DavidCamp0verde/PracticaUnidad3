@@ -126,39 +126,42 @@ public abstract class Grafo {
         Double[] D = new Double[n];  //guarda los costos mínimos de cada vertice
         Boolean[] F = new Boolean[n]; // si el vertice ya fue visitado
         Integer[] ultimo = new Integer[n];
-        Double[][] pesos = pesosGrafo(this);
+        Double[][] costos = pesosGrafo(this);
 //        System.out.println("\t1\t2\t3\t4\t5");
 //        for(int i = 0; i < n; i++){
 //            System.out.print(i+1+"\t");
 //            for(int j = 0; j < n; j++){
-//                System.out.print(pesos[i][j]+"\t");
+//                System.out.print(costos[i][j]+"\t");
 //            }
 //            System.out.println("\n");
 //        }
         for (int i = 0; i < n; i++) {
             F[i] = false;
-            D[i] = pesos[s][i];
+            D[i] = costos[s][i];
             ultimo[i] = s;
-            System.out.println("nodo " + (i + 1) + ": " + F[i] + " - " + D[i] + " - " + ultimo[i]);
+//            System.out.println("nodo " + (i + 1) + ": " + F[i] + " - " + D[i] + " - " + ultimo[i]);
         }
         F[s] = true;
         D[s] = 0.0;
         for (int i = 0; i < n; i++) {
 //            System.out.println("nodo "+(i+1)+": "+F[i]+" - "+D[i]+" - "+ultimo[i]);
+//            System.out.println("-----------------------------");
+//            System.out.println("nodo: "+(i+1));
             Integer v = minimo(n, F, D);
+//            System.out.println("v: " + v);
             F[v] = true;
             for (int w = 0; w < n; w++) {
-                if (!F[w]) {
-//                    System.out.println((D[v] +" + "+ pesos[v][w])+" < "+D[w]);
-                    if ((D[v] + pesos[v][w]) < D[w]) {
-//                        System.out.println((D[v] +" + "+ pesos[v][w])+" < "+D[w]);
-                        D[w] = D[v] + pesos[v][w];
-                        ultimo[w] = v;
-                        caminoDijkstra.insertar(D[w]);
-                    }
+//                System.out.println(F[w] + ": " + (D[v] + " + " + costos[v][w]) + " < " + D[w]);
+                if (!F[w] && ((D[v] + costos[v][w]) < D[w])) {
+//                    System.out.println((D[v] +" + "+ costos[v][w])+" < "+D[w]);
+                    D[w] = D[v] + costos[v][w];
+                    ultimo[w] = v;
+                    System.out.println(ultimo[w]);
                 }
             }
+            caminoDijkstra.insertar(D[i]);
         }
+        
         return caminoDijkstra;
     }
 
@@ -167,14 +170,10 @@ public abstract class Grafo {
         Integer v = 1;
         for (int j = 0; j < n; j++) {
             if (!F[j] && (D[j] <= mx)) {
-//                System.out.println(j);
-//                System.out.println(!F[j]+" - "+D[j]+" <= "+mx);
                 mx = D[j];
                 v = j;
-////                System.out.println("mx: "+mx+" - v: "+v);
             }
         }
-        System.out.println(v);
         return v;
     }
 
@@ -185,7 +184,11 @@ public abstract class Grafo {
             for (int j = 0; j < vertices; j++) {
 //                System.out.println((i+1)+" "+(j+1));
                 Double peso = grafo.pesoArista(i + 1, j + 1);
-                matriz[i][j] = peso;
+                if(peso != 0){
+                    matriz[i][j] = peso;
+                }else{
+                    matriz[i][j] = 10000000.0;
+                }
 //                System.out.println(matriz[i][j]);
             }
         }
@@ -198,7 +201,7 @@ public abstract class Grafo {
         Integer n = this.numVertices();
         Integer[][] traza = new Integer[n][n];
         Double[][] d = new Double[n][n];
-        
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 d[i][j] = pesos[i][j];
@@ -208,22 +211,22 @@ public abstract class Grafo {
         for (int i = 0; i < n; i++) {
             d[i][i] = 0.0;
         }
+        
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    if((d[i][k] + d[k][j]) < d[i][j]){
+                    if ((d[i][k] + d[k][j]) < d[i][j]) {
                         d[i][j] = d[i][k] + d[k][j];
-                        System.out.println(d[i][k]+" + "+d[k][j]+" < "+d[i][j]);
-                        traza[i][j]= k;
+                        traza[i][j] = k;
                     }
                 }
             }
         }
-        System.out.println("\t1\t2\t3\t4\t5");
+        System.out.println("\t1\t2\t3\t4\t5\t6");
         for(int i = 0; i < n; i++){
             System.out.print(i+1+"\t");
             for(int j = 0; j < n; j++){
-                System.out.print(traza[i][j]+"\t");
+                System.out.print(d[i][j]+"\t");
             }
             System.out.println("\n");
         }
