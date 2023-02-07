@@ -65,13 +65,14 @@ public class Main {
 //            gde.caminoMinimo(1, 5).imprimir();
             
             try {
-                Integer nodo = 1;
-//                ListaEnlazada lista = gde.caminoMinimoDijkstra(nodo-1);
+                Integer nodo = 6;
+//                ListaEnlazada lista = gde.caminoMinimoDijkstra(nodo);
 //                System.out.println("Nodo "+(nodo));
 //                for(int i = 0; i < lista.getSize(); i++){
 //                    System.out.println("al nodo "+(i+1)+", recorrido más corto: "+lista.obtener(i));
 //                }
-                gde.caminoMinimoFloyd();
+//                gde.caminoMinimoFloyd();
+                gde.recorridoAnchura(1).imprimir();
             } catch (Exception e) {
                 System.out.println("no se pudo pipipi");
             }

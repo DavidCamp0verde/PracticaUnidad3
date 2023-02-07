@@ -5,6 +5,7 @@
  */
 package Controlador.Grafo;
 
+import Controlador.Colas.Cola;
 import Controlador.ListaEnlazada.ListaEnlazada;
 
 /**
@@ -120,6 +121,7 @@ public abstract class Grafo {
 
     //enviar nro nodo -1 xd
     public ListaEnlazada caminoMinimoDijkstra(Integer origen) throws Exception {
+        origen = origen-1;
         ListaEnlazada caminoDijkstra = new ListaEnlazada();
         Integer s = origen;
         Integer n = this.numVertices();
@@ -156,7 +158,6 @@ public abstract class Grafo {
 //                    System.out.println((D[v] +" + "+ costos[v][w])+" < "+D[w]);
                     D[w] = D[v] + costos[v][w];
                     ultimo[w] = v;
-                    System.out.println(ultimo[w]);
                 }
             }
             caminoDijkstra.insertar(D[i]);
@@ -232,5 +233,85 @@ public abstract class Grafo {
         }
 //        return caminoFloyd;
     }
-
+    
+    public ListaEnlazada recorridoAnchura(Integer nodo) throws Exception{
+        nodo = nodo -1;
+        Integer n = this.numVertices();
+        ListaEnlazada recorrido = new ListaEnlazada();
+        Boolean[] visitado = new Boolean[n];
+        Integer[][] matrizAd = matrizAdyacencia(this);
+        
+        
+        visitado[nodo] = true;
+        Cola cola = new Cola(this.numVertices());
+        recorrido.insertar(nodo+1);
+        cola.insertar(nodo);
+        cola.imprimir();
+        while(!cola.estaVacia()){
+            Integer j = (Integer) cola.dequeue();
+            for(int i = 0; i < matrizAd.length; i++){
+                System.out.println(matrizAd[j][i]+" == 1 && "+!visitado[i]);
+                if(matrizAd[j][i] == 1 && !visitado[i]){
+                    cola.queue(i);
+                    recorrido.insertar(i+1);
+                    visitado[i] = true;
+                }
+            }
+        }
+        
+//        Integer w, v;
+//        Integer[] m;
+//        v = this.numVertices();
+//        Integer[][] matrizAd = matrizAdyacencia(this);
+//        
+//        if(v <= 0 || v > this.numVertices()) throw new Exception ("Vértice de Origen no existe");
+//        m = new Integer[this.numVertices()];
+//        Cola cola = new Cola(this.numVertices());
+//        for(int i =0; i < this.numVertices(); i++){
+//            m[i]=origen;
+//        }
+//        m[v] = 0;
+//        cola.queue(v);
+//        recorrido.insertar(v);
+//        while(!cola.estaVacia()){
+//            Integer cw;
+//            cw = (Integer) cola.dequeue();
+//            w = cw;
+//            for(int u = 0; u < this.numVertices(); u++){
+//                if(matrizAd[w][u] == 1 && (m[u]== origen)){
+//                    m[u] = m[w]+1;
+//                    cola.queue(u);
+//                    recorrido.insertar(u);
+//                }
+//            }
+//        }
+        
+        return recorrido;
+    }
+    
+    public ListaEnlazada toList(Object[] matriz) {
+        ListaEnlazada lista = new ListaEnlazada();
+        lista.vaciar();
+        for (int i = 0; i < matriz.length; i++) {
+            lista.insertar(matriz[i]);
+        }
+        return lista;
+    }
+    
+    private Integer[][] matrizAdyacencia(Grafo grafo) throws Exception {
+        Integer vertices = grafo.numVertices();
+        Integer[][] matriz = new Integer[vertices][vertices];
+        for (int i = 0; i < vertices; i++) {
+            for (int j = 0; j < vertices; j++) {
+//                System.out.println((i+1)+" "+(j+1));
+                Double peso = grafo.pesoArista(i + 1, j + 1);
+                if(peso != 0){
+                    matriz[i][j] = 1;
+                }else{
+                    matriz[i][j] = 0;
+                }
+            }
+        }
+        return matriz;
+    }
 }
