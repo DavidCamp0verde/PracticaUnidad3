@@ -43,28 +43,36 @@ public class Main {
 //        } catch (Exception e) {
 //            System.out.println("Error: "+e.getMessage());
 //        }
-        GrafoNoDirigidoEtiquetado gde = new GrafoNoDirigidoEtiquetado(6, String.class);
+        GrafoNoDirigidoEtiquetado gde = new GrafoNoDirigidoEtiquetado(7, String.class);
 //        System.out.println(gde.toString());
-        gde.etiquetar(1, "1");
-        gde.etiquetar(2, "2");
-        gde.etiquetar(3, "3");
-        gde.etiquetar(4, "4");
-        gde.etiquetar(5, "5");
-        gde.etiquetar(6, "6");
+        gde.etiquetar(1, "Soto");
+        gde.etiquetar(2, "Rodolfo");
+        gde.etiquetar(3, "Gamer");
+        gde.etiquetar(4, "Choclo");
+        gde.etiquetar(5, "Vaaaca");
+        gde.etiquetar(6, "Peter");
+        gde.etiquetar(7, "IntriagoGei");
         try {
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(4), 6.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 4.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(1), 3.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(2), 5.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(3), 8.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(4), 1.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(2), 9.0);
-            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(4), gde.obtenerEtiqueta(6), 2.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(4), 6.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 4.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(1), 3.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(2), 5.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(3), 8.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(4), 1.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(2), 9.0);
+//            gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(4), gde.obtenerEtiqueta(6), 2.0);
+
 //            System.out.println(gde.toString());
-            
 //            gde.caminoMinimo(1, 5).imprimir();
-            
             try {
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(1), gde.obtenerEtiqueta(5), 2.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(2), 4.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(2), gde.obtenerEtiqueta(4), 1.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(4), 6.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(3), gde.obtenerEtiqueta(4), 9.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(7), 4.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(6), gde.obtenerEtiqueta(3), 4.0);
+                gde.insertarAristaEtiquetada(gde.obtenerEtiqueta(5), gde.obtenerEtiqueta(6), 4.0);
                 Integer nodo = 6;
 //                ListaEnlazada lista = gde.caminoMinimoDijkstra(nodo);
 //                System.out.println("Nodo "+(nodo));
@@ -72,12 +80,14 @@ public class Main {
 //                    System.out.println("al nodo "+(i+1)+", recorrido más corto: "+lista.obtener(i));
 //                }
 //                gde.caminoMinimoFloyd();
-                gde.recorridoAnchura(1).imprimir();
+                gde.recorridoAnchura(4).imprimir();
             } catch (Exception e) {
                 System.out.println("no se pudo pipipi");
+                System.out.println(e.getStackTrace()[0].getLineNumber());
+                System.out.println(e.getStackTrace()[0].getClassName());
             }
             new FrmGrafo(null, true, gde, 1).setVisible(true);
-            
+
         } catch (Exception e) {
         }
     }

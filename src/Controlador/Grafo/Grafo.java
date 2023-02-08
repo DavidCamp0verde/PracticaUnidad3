@@ -7,6 +7,7 @@ package Controlador.Grafo;
 
 import Controlador.Colas.Cola;
 import Controlador.ListaEnlazada.ListaEnlazada;
+import Controlador.Pilas.Pila;
 
 /**
  *
@@ -241,17 +242,18 @@ public abstract class Grafo {
         Boolean[] visitado = new Boolean[n];
         Integer[][] matrizAd = matrizAdyacencia(this);
         
+        for(int i = 0; i < matrizAd.length; i++){
+            visitado[i] = false;
+        }
         
         visitado[nodo] = true;
         Cola cola = new Cola(this.numVertices());
         recorrido.insertar(nodo+1);
         cola.insertar(nodo);
-        cola.imprimir();
         while(!cola.estaVacia()){
             Integer j = (Integer) cola.dequeue();
             for(int i = 0; i < matrizAd.length; i++){
-                System.out.println(matrizAd[j][i]+" == 1 && "+!visitado[i]);
-                if(matrizAd[j][i] == 1 && !visitado[i]){
+                if((matrizAd[j][i] == 1) && (!visitado[i])){
                     cola.queue(i);
                     recorrido.insertar(i+1);
                     visitado[i] = true;
@@ -259,32 +261,22 @@ public abstract class Grafo {
             }
         }
         
-//        Integer w, v;
-//        Integer[] m;
-//        v = this.numVertices();
-//        Integer[][] matrizAd = matrizAdyacencia(this);
-//        
-//        if(v <= 0 || v > this.numVertices()) throw new Exception ("Vértice de Origen no existe");
-//        m = new Integer[this.numVertices()];
-//        Cola cola = new Cola(this.numVertices());
-//        for(int i =0; i < this.numVertices(); i++){
-//            m[i]=origen;
-//        }
-//        m[v] = 0;
-//        cola.queue(v);
-//        recorrido.insertar(v);
-//        while(!cola.estaVacia()){
-//            Integer cw;
-//            cw = (Integer) cola.dequeue();
-//            w = cw;
-//            for(int u = 0; u < this.numVertices(); u++){
-//                if(matrizAd[w][u] == 1 && (m[u]== origen)){
-//                    m[u] = m[w]+1;
-//                    cola.queue(u);
-//                    recorrido.insertar(u);
-//                }
-//            }
-//        }
+        return recorrido;
+    }
+    
+    public ListaEnlazada recorridoProfundidad(Integer nodo) throws Exception{
+        nodo = nodo -1;
+        Integer n = this.numVertices();
+        ListaEnlazada recorrido = new ListaEnlazada();
+        Boolean[] visitado = new Boolean[n];
+        Integer[][] matrizAd = matrizAdyacencia(this);
+        
+        for(int i = 0; i < matrizAd.length; i++){
+            visitado[i] = false;
+        }
+        
+        visitado[nodo] = true;
+        Pila pila = new Pila();
         
         return recorrido;
     }
