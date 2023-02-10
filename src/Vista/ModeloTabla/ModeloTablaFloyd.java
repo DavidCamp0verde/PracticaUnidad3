@@ -43,9 +43,7 @@ public class ModeloTablaFloyd extends AbstractTableModel {
             try {
                 recorridoFloyd = grafo.caminoMinimoFloyd();
                 if (recorridoFloyd[rowIndex][columnIndex] != 0) {
-//                    Integer aux = recorridoFloyd[rowIndex+1][columnIndex];
                     return grafo.obtenerEtiqueta(recorridoFloyd[rowIndex][columnIndex-1]);
-//                    return grafo.pesoArista(rowIndex+1, columnIndex);
                 } else {
                     return "--";
                 }

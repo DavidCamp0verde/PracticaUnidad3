@@ -7,6 +7,8 @@ package Vista.Utilidades;
 
 import Controlador.EstacionBusController;
 import Controlador.Grafo.Grafo;
+import Controlador.ListaEnlazada.Excepciones.ListaVaciaExcepcion;
+import Controlador.ListaEnlazada.Excepciones.PosicionNoEncontradaException;
 import Controlador.ListaEnlazada.ListaEnlazada;
 import Modelo.EstacionBus;
 import com.google.gson.Gson;
@@ -68,5 +70,32 @@ public class Utilidades {
         }
         return lista;
     }
+    
+    public static void modificarEstacion(EstacionBus estacion, Integer posicion) throws PosicionNoEncontradaException {
+        ListaEnlazada<EstacionBus> lista = listarEstaciones();
+        lista.modificarPosicion(estacion, posicion);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(lista);
+        try ( PrintWriter pw = new PrintWriter(new File("estaciones.json"))) {
+            pw.write(jsonString);
+        } catch (Exception e) {
+            System.out.println("Error en el metodo de guardar en utilidades: " + e);
+        }
+    }
+    
+    public static void eliminarEstacion(Integer posicion) throws PosicionNoEncontradaException, ListaVaciaExcepcion {
+        ListaEnlazada<EstacionBus> lista = listarEstaciones();
+        lista.eliminar(posicion);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(lista);
+        try ( PrintWriter pw = new PrintWriter(new File("estaciones.json"))) {
+            pw.write(jsonString);
+        } catch (Exception e) {
+            System.out.println("Error en el metodo de guardar en utilidades: " + e);
+        }
+    }
+
     
 }
