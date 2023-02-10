@@ -59,8 +59,8 @@ public class Utilidades {
     
     public static Double calcularDistancia(Double y, Double y1, Double x, Double x1){
         Double yy = y - y1;
-        Double xx = x - x1;
-        return redondear(Math.sqrt((yy*yy)-(xx*xx)));
+        Double xx = x - x1;;
+        return redondear(Math.sqrt((yy*yy)+(xx*xx)));
     }
     
     public static Double redondear(Double dato){

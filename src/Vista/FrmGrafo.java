@@ -47,6 +47,13 @@ public class FrmGrafo extends javax.swing.JDialog {
         initComponents();
         cargarDatos(estado);
     }
+    
+    public FrmGrafo(java.awt.Dialog parent, Grafo grafo, Integer estado) {
+        super(parent);
+        this.grafo = grafo;
+        initComponents();
+        cargarDatos(estado);
+    }
 
     private void cargarDatos(Integer estado) {
         mxGraph graph = new mxGraph();

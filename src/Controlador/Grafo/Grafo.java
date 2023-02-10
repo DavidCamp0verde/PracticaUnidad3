@@ -197,8 +197,8 @@ public abstract class Grafo {
         return matriz;
     }
 
-    public void caminoMinimoFloyd() throws Exception {
-        ListaEnlazada caminoFloyd = new ListaEnlazada();
+    public Integer[][] caminoMinimoFloyd() throws Exception {
+        
         Double[][] pesos = pesosGrafo(this);
         Integer n = this.numVertices();
         Integer[][] traza = new Integer[n][n];
@@ -207,7 +207,11 @@ public abstract class Grafo {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 d[i][j] = pesos[i][j];
-                traza[i][j] = -1;
+                if(d[i][j] == 0.0){
+                    traza[i][j] = -1;
+                }else{
+                    traza[i][j] = i+1;
+                }
             }
         }
         for (int i = 0; i < n; i++) {
@@ -219,20 +223,20 @@ public abstract class Grafo {
                 for (int j = 0; j < n; j++) {
                     if ((d[i][k] + d[k][j]) < d[i][j]) {
                         d[i][j] = d[i][k] + d[k][j];
-                        traza[i][j] = k;
+                        traza[i][j] = k + 1;
                     }
                 }
             }
         }
-        System.out.println("\t1\t2\t3\t4\t5\t6");
-        for (int i = 0; i < n; i++) {
-            System.out.print(i + 1 + "\t");
-            for (int j = 0; j < n; j++) {
-                System.out.print(d[i][j] + "\t");
-            }
-            System.out.println("\n");
-        }
-//        return caminoFloyd;
+//        System.out.println("\t1\t2\t3\t4\t5\t6");
+//        for (int i = 0; i < n; i++) {
+//            System.out.print(i + 1 + "\t");
+//            for (int j = 0; j < n; j++) {
+//                System.out.print(traza[i][j] + "\t");
+//            }
+//            System.out.println("\n");
+//        }
+        return traza;
     }
 
     public ListaEnlazada recorridoAnchura(Integer nodo) throws Exception {
@@ -280,12 +284,12 @@ public abstract class Grafo {
         pila.push(nodo);
         while (!pila.estaVacia()) {
             Integer j = (Integer) pila.pop();
-            recorrido.insertar(j+1);
-            ListaEnlazada<Adyacencia> lista = adyacentes(j+1);
-            for(int i = 0; i < lista.getSize(); i++){
+            recorrido.insertar(j + 1);
+            ListaEnlazada<Adyacencia> lista = adyacentes(j + 1);
+            for (int i = 0; i < lista.getSize(); i++) {
                 Adyacencia ck = lista.obtener(i);
-                Integer k = ck.getDestino()-1;
-                if(!visitado[k]){
+                Integer k = ck.getDestino() - 1;
+                if (!visitado[k]) {
                     pila.push(k);
                     visitado[k] = true;
                 }

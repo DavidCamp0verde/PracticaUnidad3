@@ -13,16 +13,17 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author David Campoverde
  */
-public class ModeloTablaAdyacencia extends AbstractTableModel {
+public class ModeloTablaFloydPesos extends AbstractTableModel {
 
     private GrafoNoDirigidoEtiquetado<EstacionBus> grafo;
+    private Integer[][] recorridoFloyd;
     private String[] columnas;
-    
+
     @Override
     public int getRowCount() {
         return grafo.numVertices();
     }
-    
+
     @Override
     public int getColumnCount() {
         return grafo.numVertices() + 1;
@@ -37,30 +38,30 @@ public class ModeloTablaAdyacencia extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (columnIndex == 0) {
-            return columnas[rowIndex+1];
+            return columnas[rowIndex + 1];
         } else {
             try {
-                if (grafo.existeArista(rowIndex+1, columnIndex)) {
-                    return grafo.pesoArista(rowIndex+1, columnIndex);
-                }else{
+                recorridoFloyd = grafo.caminoMinimoFloyd();
+                if (recorridoFloyd[rowIndex][columnIndex] > 0) {
+                    return recorridoFloyd[rowIndex][columnIndex-1];
+                } else {
                     return "--";
                 }
             } catch (Exception e) {
-                System.out.println("Error en ver arista");
             }
         }
         return "";
     }
-    
-    private String[] generarColumnas(){
-        columnas = new String[grafo.numVertices()+1];
+
+    private String[] generarColumnas() {
+        columnas = new String[grafo.numVertices() + 1];
         columnas[0] = "--V--";
-        for(int i = 1; i < columnas.length; i++){
+        for (Integer i = 1; i < columnas.length; i++) {
             columnas[i] = grafo.obtenerEtiqueta(i).toString();
         }
         return columnas;
     }
-    
+
     public GrafoNoDirigidoEtiquetado<EstacionBus> getGrafo() {
         return grafo;
     }
@@ -69,7 +70,5 @@ public class ModeloTablaAdyacencia extends AbstractTableModel {
         this.grafo = grafo;
         generarColumnas();
     }
-    
-    
 
 }
